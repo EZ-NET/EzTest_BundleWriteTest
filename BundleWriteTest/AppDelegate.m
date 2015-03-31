@@ -17,6 +17,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSString* plist = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSDictionary* info = [NSDictionary dictionaryWithContentsOfFile:plist];
+    
+    NSLog(@"%@", info);
+    
+    NSMutableDictionary* rewrite = info.mutableCopy;
+    
+    rewrite[@"CFBundleDisplayName"] = @"Bundle Rewrite";
+    
+    if ([rewrite writeToFile:plist atomically:YES])
+    {
+        NSLog(@"OK");
+    }
+    else
+    {
+        NSLog(@"NG");
+    }
+    
     return YES;
 }
 
